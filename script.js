@@ -1,5 +1,4 @@
 'use strict';
-//movie genres list:Horror,Drama,Romantic,Action,Western,comedy,historical,Documentary,science fiction
 const movie = {
   id: 1,
   title: 'Interstellar',
@@ -25,11 +24,6 @@ const movie = {
   rating: 7.4,
 };
 
-//  via DOM manipulation, implement one of the two (or both!):
-//  a. submitting and displaying a comment about the movie. Implement an imput under the movie and a functionality to display the submitted comment.
-//  b. rating the movie in a star-rating format and displaying the submitted rating.
-// console.log(movie.actors.slice(0, 3).join('\n'));
-
 /* variables */
 const header = document.getElementById('header');
 const menu = document.getElementById('menu');
@@ -42,7 +36,7 @@ const cardMarkup = `
   <h5>${movie.director}</h5>
   <h5>${movie.movie_year}</h5>
 </div>
-<div class="movie-rating">
+<div class="movie-rating hidden">
   <form>
     <input
       type="text"
@@ -68,28 +62,28 @@ const cardMarkup = `
 `;
 
 const headerMarkup = `
-<div class="about-movie" id="about-movie">
-        <div class="movie-introduce">
-          <div class="movie-title">
-            <h3>${movie.title}</h3>
-            <h5>${movie.genre}</h5>
-          </div>
-          
-          <div class="buy-movie">
-            <h5 class="buy-movie__price">${movie.price}</h5>
-            <a href="#" class="buy-movie__btn">Buy</a>
-          </div>
-        </div>
-        <div class="movie-description">
-          <p>
-            actors: ${movie.actors}
-          </p>
-          <p>
-            ${movie.description}
-          </p>
-        </div>
-        
-      </div>
+<div class="about-movie hidden" id="about-movie">
+  <div>
+  <div class="movie-title">
+    <h3>${movie.title}</h3>
+    <h5>${movie.genre}</h5>
+  </div>
+
+  <div class="buy-movie">
+    <h5 class="buy-movie__price">${movie.price}</h5>
+    <a href="#" class="buy-movie__btn">Buy</a>
+  </div>
+  </div>
+  <div class="movie-description">
+    <p>
+      actors: ${movie.actors}
+    </p>
+    <p>
+      ${movie.description}
+     </p>
+  </div>
+     <div class="movie-photo"></div>  
+</div>
   `;
 
 function createElements(parent, elType, myClass) {
@@ -98,46 +92,58 @@ function createElements(parent, elType, myClass) {
   parent.appendChild(element);
   return element;
 }
-// design and implement the layout of the movie card via DOM manipulation.
-const cardElement = createElements(main, 'div', 'card');
+// design and implement the layout of the movie card via DOM manipulation{}
+function showMovieCard() {
+  const cardElement = createElements(main, 'div', 'card');
 
-cardElement.insertAdjacentHTML('afterbegin', cardMarkup);
-//  a. submitting and displaying a comment about the movie. Implement an imput under the movie and a functionality to display the submitted comment.
-const inputElement = document.getElementById('inputValue');
-const commentBtn = document.querySelector('.comment-btn');
-const commentOutput = document.querySelector('.comment-output');
+  cardElement.insertAdjacentHTML('afterbegin', cardMarkup);
+  //  a. submitting and displaying a comment about the movie. Implement an imput under the movie and a functionality to display the submitted comment.
+  const clientMovieRate = document.querySelector('.movie-rating');
+  const inputElement = document.getElementById('inputValue');
+  const commentBtn = document.querySelector('.comment-btn');
+  const commentOutput = document.querySelector('.comment-output');
 
-const stars = document.querySelectorAll('.star');
-const starsOutput = document.getElementById('output');
+  const stars = document.querySelectorAll('.star');
+  const starsOutput = document.getElementById('output');
 
-commentBtn.addEventListener('click', function (e) {
-  e.preventDefault();
+  cardElement.addEventListener('mouseover', function (e) {
+    clientMovieRate.classList.remove('hidden');
+  });
 
-  const value = inputElement.value;
-  commentOutput.innerHTML = '';
-  commentOutput.innerHTML = `" ${value} "`;
-});
+  cardElement.addEventListener('mouseleave', function () {
+    clientMovieRate.classList.add('hidden');
+  });
 
-//  b. rating the movie in a star-rating format and displaying the submitted rating.
+  commentBtn.addEventListener('click', function (e) {
+    e.preventDefault();
 
-for (const star of stars) {
-  star.addEventListener('click', function () {
-    star.setAttribute('data-clicked', 'true');
-    const rating = this.dataset.rating;
-    console.log(rating);
-    starsOutput.innerHTML = `<h5>Your rating is: ${rating}/5</h5>`;
+    const value = inputElement.value;
+    commentOutput.innerHTML = '';
+    commentOutput.innerHTML = `" ${value} "`;
+  });
+
+  //  b. rating the movie in a star-rating format and displaying the submitted rating.
+
+  for (const star of stars) {
+    star.addEventListener('click', function () {
+      star.setAttribute('data-clicked', 'true');
+      const rating = this.dataset.rating;
+      console.log(rating);
+      starsOutput.innerHTML = `<h5>Your rating is: ${rating}/5</h5>`;
+    });
+  }
+
+  header.insertAdjacentHTML('beforeend', headerMarkup);
+  const aboutMovie = document.getElementById('about-movie');
+  const moviePhoto = document.querySelector('.movie-photo');
+
+  cardElement.addEventListener('mouseover', function (e) {
+    aboutMovie.classList.remove('hidden');
+    moviePhoto.style.backgroundImage = `url(${movie.poster_url})`;
+  });
+
+  cardElement.addEventListener('mouseleave', function () {
+    aboutMovie.classList.add('hidden');
   });
 }
-
-header.insertAdjacentHTML('beforeend', headerMarkup);
-const aboutMovie = document.getElementById('about-movie');
-
-cardElement.addEventListener('mouseover', function (e) {
-  aboutMovie.style.transform = 'translateY(0)';
-  aboutMovie.style.zIndex = '1';
-});
-
-cardElement.addEventListener('mouseleave', function () {
-  aboutMovie.style.transform = 'translateY(-150%)';
-  aboutMovie.style.zIndex = '-1';
-});
+showMovieCard();

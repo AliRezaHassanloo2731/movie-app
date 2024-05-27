@@ -11,7 +11,6 @@
 /* variables */
 :root {
   /* BACKGROUND COLORES */
-  --bg-logo: #eb0a1e;
   --bg-color-primary: #121113;
   --bg-header-color: rgb(29, 29, 32);
   --bg-color-secondary: rgb(47, 60, 126);
@@ -26,6 +25,7 @@
   --color-tertiary: #fafa33;
   --colo-complementory: #c0c4d8;
   --color-red: #9f000f;
+  --colore-red-light: #eb0a1e;
   --color-silver: #c0c0c0;
 
   /* SHADOW COLORS */
@@ -59,9 +59,9 @@ h1 {
   margin: 0.5rem auto;
   background-image: linear-gradient(
     to bottom,
-    var(--bg-color-secondary) 50%,
-    var(--color-secondary) 45%,
-    var(--color-red) 57%
+    var(--color-primary) 40%,
+    var(--colo-complementory) 70%,
+    var(--color-secondary) 12%
   );
   background-clip: text;
   color: transparent;
@@ -72,7 +72,7 @@ h2 {
   line-height: 1.2;
 }
 h3 {
-  color: #9f000f;
+  color: var(--colore-red-light);
   font-family: 'Bebas Neue', sans-serif;
   font-size: 2.9rem;
 }
@@ -83,6 +83,9 @@ img {
   max-width: 100%;
   /* max-height: fit-content; */
   display: block;
+}
+img:hover {
+  pointer-events: none;
 }
 a {
   display: block;
@@ -109,15 +112,16 @@ input::placeholder {
   background-color: var(--bg-header-color);
   color: var(--colo-complementory);
   grid-column: 1/-1;
-  /* transition: a11 3s ease-in-out; */
+  position: sticky;
+  z-index: 1;
+  top: 0;
 }
 .about-movie {
-  padding: 1rem 2rem 1rem 4rem;
+  padding: 1rem 3rem 1rem 3rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 2rem;
-  margin: 1rem 1rem;
+  gap: 1rem;
   transition: all 600ms ease-in-out;
 }
 
@@ -130,37 +134,37 @@ input::placeholder {
 }
 .buy-movie {
   font-size: 1.4rem;
-  margin-top: 2.2rem;
+  margin-top: 0.2rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 .buy-movie__price {
   font-size: 1.9rem;
-  color: var(--color-red);
+  color: var(--bg-green);
 }
 .buy-movie__btn {
   padding: 0.2rem 1.2rem;
-  color: var(--bg-color-primary);
+  color: var(--bg-green);
   font-weight: bold;
-  outline: 2px solid var(--bg-color-primary);
+  outline: 2px solid var(--colo-complementory);
   border-radius: 2rem;
   transition: all 200ms ease-in;
 }
 .buy-movie__btn:hover {
-  background-color: var(--bg-color-primary);
-  color: var(--color-primary);
+  background-color: var(--color-tertiary);
+  color: var(--bg-color-primary);
+  font-weight: bold;
 }
 .movie-description p {
   margin-bottom: 0.5rem;
 }
 
 .movie-photo {
-  background-color: #7c6;
-  width: 40rem;
-  height: 16rem;
+  /* flex: 2; */
+  width: 50%;
+  height: 18rem;
   border-radius: 2rem;
-  /* background-image: url('https://www.themoviedb.org/t/p/w600_and_h900_bestv2/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg'); */
   background-repeat: no-repeat;
   background-position: top;
   background-size: cover;
@@ -169,7 +173,7 @@ input::placeholder {
 /* HEADER STYLES END HERE */
 /* NAV STYLES START HERE */
 .menu {
-  background-color: var(--bg-color-tertiary);
+  background: linear-gradient(0.25turn, #191a1a, #282926, #191a1a);
   grid-row: 2/-1;
   grid-column: 1 / span 2;
 }
@@ -177,33 +181,36 @@ input::placeholder {
 /* NAV STYLES END HERE */
 /* MAIN STYLES START HERE */
 .main {
+  background: linear-gradient(0.25turn, #1a1d1d, #424440, #1a1d1d);
   width: 100%;
   margin: 0.2rem auto;
-
-  background-color: var(--bg-green);
   grid-row: 2/-1;
   grid-column: 3 / -1;
   display: grid;
   grid-template-rows: repeat(4, 1fr);
   grid-template-columns: repeat(6, 1fr);
-  gap: 0.5rem;
+  justify-items: center;
+  gap: 0.2rem;
 }
 .card {
-  background-color: var(--bg-color-secondary);
-  /* grid-row: 1 / span 2; */
-  /* grid-column: 1 / span 2; */
+  background-color: #5a5757;
   font-size: 2.4rem;
   max-width: 20rem;
   height: 34rem;
   margin: 1rem;
-  box-shadow: 0 0.4rem 0.5rem var(--shadow-lighter-trancparency);
+  box-shadow: 0 0.2rem 0.3rem var(--shadow-lighter-trancparency);
   border-radius: 3px;
   position: relative;
   overflow: hidden;
   transition: all 200ms ease;
+  backface-visibility: hidden;
+  resize: none;
 }
 .card:hover {
   border: 0.4rem solid var(--color-primary);
+  backface-visibility: hidden;
+  resize: none;
+
   transition: all 200ms ease;
 }
 /* comment styles */
@@ -218,7 +225,7 @@ input::placeholder {
   align-items: center;
   justify-content: center;
   padding: 2rem 0;
-  transform: translateY(-100%);
+  transform: translateY(-95%);
   z-index: 10;
 }
 .movie-rating form {
@@ -313,7 +320,7 @@ input::placeholder {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -100%);
   transition: all 200ms ease-in;
 }
 .trailer-btn i {

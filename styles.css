@@ -33,6 +33,10 @@
   --shadow-darker: rgba(4, 6, 12, 0.2);
   --shadow-light: rgb(238, 240, 249);
   --shadow-lighter-trancparency: rgba(2555, 253, 255, 0.2);
+
+  /* menu */
+  --menu-dark: #191a1a;
+  --menu-trancparency: rgba(25, 26, 26, 0.1);
 }
 /* GENERAL STYLES */
 html {
@@ -177,6 +181,51 @@ input::placeholder {
   grid-row: 2/-1;
   grid-column: 1 / span 2;
 }
+.menu-search {
+  width: 90%;
+  margin: 2rem 0.5rem;
+  /* border: 2px solid #fff; */
+  height: 6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.menu-input {
+  background-color: inherit;
+  border: 0;
+  font-size: 1.8rem;
+  /* padding: 1rem; */
+  border-radius: 0.5rem;
+  max-width: 80%;
+  height: 5rem;
+  transition: width 0.3s ease-in-out;
+}
+.menu-btn {
+  cursor: pointer;
+  background-color: var(--menu-trancparency);
+  border-radius: 0.4rem;
+  border: none;
+  font-size: 2.4rem;
+  height: 5rem;
+  width: 5rem;
+  transform: translateX(-175%);
+  transition: transform 0.3s ease-in-out;
+}
+.menu-search.active .menu-input {
+  width: 20rem;
+  transition: transform 0.3s ease-in-out;
+}
+.menu-search.active .menu-btn {
+  transform: translateX(0);
+  transition: transform 0.3s ease-in-out;
+}
+.fa-search {
+  color: var(--color-primary);
+}
+/* .menu-search.active .menu-btn .fa-search {
+  color: var(--bg-color-primary);
+} */
 
 /* NAV STYLES END HERE */
 /* MAIN STYLES START HERE */
@@ -187,9 +236,10 @@ input::placeholder {
   grid-row: 2/-1;
   grid-column: 3 / -1;
   display: grid;
-  grid-template-rows: repeat(4, 1fr);
-  grid-template-columns: repeat(6, 1fr);
-  justify-items: center;
+  /* grid-template-rows: repeat(4, 1fr);
+  grid-template-columns: repeat(6, 1fr); */
+  grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+  /* justify-items: center; */
   gap: 0.2rem;
 }
 .card {
@@ -340,7 +390,11 @@ input::placeholder {
   visibility: hidden;
   transform: translateY(-100%);
 }
-@media (max-width: 1680px) {
+.hide {
+  display: none;
+  transform: translateY(-100%);
+}
+/* @media (max-width: 1680px) {
   .main {
     grid-template-rows: repeat(4, 1fr);
     grid-template-columns: repeat(5, 1fr);
@@ -369,4 +423,4 @@ input::placeholder {
     grid-template-rows: repeat(4, 1fr);
     grid-template-columns: repeat(1, 1fr);
   }
-}
+} */

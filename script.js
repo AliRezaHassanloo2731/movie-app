@@ -283,6 +283,9 @@ const cardMarkup = movie => `
   <h5>${movie.director}</h5>
   <h5>${movie.movie_year}</h5>
 </div>
+`;
+
+const ratingMarkup = movie => `
 <div class="movie-rating hidden">
   <form>
     <input
@@ -303,50 +306,22 @@ const cardMarkup = movie => `
     </div>
     <div class="star-output">
       <h5></h5>
-    </div>  
+    </div>
   </div>
 </div>
 `;
 
-// const rateMarkup = movie => `
-// <div class="movie-rating hidden">
-//   <form>
-//     <input
-//       type="text"
-//       class="input-value"
-//       placeholder="share your opinion"
-//     />
-//     <button class="comment-btn">submit</button>
-//   </form>
-//   <div class="comment-output"></div>
-//   <div class="movie-rating-star">
-//     <div class="star-rating">
-//       <span class="star" data-rating="5">&#9733</span>
-//       <span class="star" data-rating="4">&#9733</span>
-//       <span class="star" data-rating="3">&#9733</span>
-//       <span class="star" data-rating="2">&#9733</span>
-//       <span class="star" data-rating="1">&#9733</span>
-//     </div>
-//     <div class="star-output">
-//       <h5></h5>
-//     </div>
-//   </div>
-// </div>
-// `;
-
 const headerMarkup = movie => `
-<div class="about-movie">
-  
+<div class="about-movie hiddn">
   <div class="movie-title">
     <h3>${movie.title}</h3>
     <h5>${movie.genre}</h5>
- 
   <div class="movie-description">
     <p>
        ${movie.actors.slice(0, 2).join(' , ')} , . . .
     </p>
     <p>
-      ${movie.description.split(' ').slice(0, 25).join(' ')} . . .
+      ${movie.description.split(' ').slice(0, 22).join(' ')} . . .
      </p>
   </div>
     <div class="buy-movie">
@@ -365,16 +340,8 @@ function createElements(parent, elType, myClass) {
   return element;
 }
 //week 2
-// JS2 week2 - Array functions, Arrow function
-// Start with creating an array of movie objects. Even a small one is perfectly enough, but go as big as you want! Continue with the format of the movie object you used last week or improve it and refactor!
 
-//  traverse the movie array and display all the movies on the page in a grid via DOM manipulation.
-
-//  manipulate the movie array, implementing these functions:
-// a function for searching for a provided keyword in the movie title;
-// a function for sorting the movie array by one or a few selected properties.
-//  optional: as you might guess, you will later use these functions to implement searching and sorting functionality, so feel free to add any other array-manipulation functions of your choice!
-movies.map(movie => showMovieCard(movie));
+const cards = movies.map(movie => showMovieCard(movie));
 
 function showMovieCard(movie) {
   const cardElement = createElements(main, 'div', 'card');
@@ -403,6 +370,11 @@ function showMovieCard(movie) {
     const stars = document.querySelectorAll('.star');
     const starsOutput = document.querySelector('.star-output');
 
+    aboutMovie.classList.remove('hidden');
+    aboutMovie.classList.add('about-movie-${movie.id}');
+
+    moviePhoto.style.backgroundImage = `url(${movie.poster_url})`;
+
     movieRate.classList.remove('hidden');
 
     commentBtn.addEventListener('click', function (e) {
@@ -424,9 +396,101 @@ function showMovieCard(movie) {
       });
     }
     /* SHOW about movie inside header */
-    aboutMovie.classList.remove('hidden');
-    aboutMovie.classList.add('about-movie-${movie.id}');
-
-    moviePhoto.style.backgroundImage = `url(${movie.poster_url})`;
   });
+  return { title: movie.title, genre: movie.genre, cardElement: cardElement };
 }
+
+function createMovieRating(rate) {
+  const inputElement = document.querySelector('.input-value');
+  const commentBtn = document.querySelector('.comment-btn');
+  const commentOutput = document.querySelector('.comment-output');
+
+  const stars = document.querySelectorAll('.star');
+  const starsOutput = document.querySelector('.star-output');
+
+  commentBtn.addEventListener('click', function (e) {
+    e.preventDefault();
+
+    const value = inputElement.value;
+    commentOutput.innerHTML = `" ${value} "`;
+  });
+
+  //  b. rating the movie in a star-rating format and displaying the submitted rating.
+
+  for (const star of stars) {
+    star.addEventListener('click', function () {
+      star.setAttribute('data-clicked', 'true');
+      const rating = this.dataset.rating;
+
+      starsOutput.innerHTML = `<h5>Your rating is: ${rating}/5</h5>`;
+    });
+  }
+}
+
+//SEARCH FUNCTINALITY
+//VARIABLES
+
+const menuSearch = document.querySelector('.menu-search');
+const menuInput = document.querySelector('.menu-input');
+const menuBtn = document.querySelector('.menu-btn');
+
+menuBtn.addEventListener('click', function (e) {
+  e.preventDefault();
+
+  menuSearch.classList.toggle('active');
+  menuInput.focus();
+});
+menuInput.addEventListener('input', function (e) {
+  e.preventDefault();
+  const value = e.target.value.toLowerCase();
+  cards.forEach(card => {
+    const isVisible =
+      card.title.toLowerCase().includes(value) ||
+      card.genre.toLowerCase().includes(value);
+
+    card.cardElement.classList.toggle('hide', !isVisible);
+  });
+});
+//   const aboutMovie = document.querySelector(`.about-movie`);
+
+//   const moviePhoto = document.querySelector('.movie-photo');
+
+//   const movieRate = document.querySelector('.movie-rating');
+
+//   const inputElement = document.querySelector('.input-value');
+//   const commentBtn = document.querySelector('.comment-btn');
+//   const commentOutput = document.querySelector('.comment-output');
+
+//   const stars = document.querySelectorAll('.star');
+//   const starsOutput = document.querySelector('.star-output');
+
+//   movieRate.classList.remove('hidden');
+
+//   commentBtn.addEventListener('click', function (e) {
+//     e.preventDefault();
+
+//     const value = inputElement.value;
+//     commentOutput.innerHTML = `" ${value} "`;
+//   });
+
+//   //  b. rating the movie in a star-rating format and displaying the submitted rating.
+
+//   for (const star of stars) {
+//     star.addEventListener('click', function () {
+//       star.setAttribute('data-clicked', 'true');
+//       const rating = this.dataset.rating;
+
+//       starsOutput.innerHTML = `<h5>Your rating is: ${rating}/5</h5>`;
+//     });
+//   }
+//   /* SHOW about movie inside header */
+//   aboutMovie.classList.remove('hide');
+//   aboutMovie.classList.add('about-movie-${movie.id}');
+
+//   moviePhoto.style.backgroundImage = `url(${movie.poster_url})`;
+// });
+
+// cardElement.addEventListener('mouseleave', function () {
+//   aboutMovie.classList.add('hide');
+//   aboutMovie.classList.remove('about-movie-${movie.id}');
+// });

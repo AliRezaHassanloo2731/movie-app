@@ -1,4 +1,4 @@
-'use strict';
+/* VARIABLES */
 const movies = [
   {
     id: 1,
@@ -271,48 +271,32 @@ const movies = [
   },
 ];
 
-/* variables */
 const header = document.getElementById('header');
-const menu = document.getElementById('menu');
 const main = document.getElementById('main');
+const menu = document.getElementById('menu');
 
+/*---- Menu variable ========*/
+const menuBar = document.querySelector('.menu-bars');
+const menuOverlay = document.querySelector('.menu-overlay');
+const navLink1 = document.querySelector('.nav-link-1');
+const navLink2 = document.querySelector('.nav-link-2');
+const navLink3 = document.querySelector('.nav-link-3');
+const navLink4 = document.querySelector('.nav-link-4');
+
+/*---- Card variable ========*/
+
+/* MARKUPS__________________----------- */
 const cardMarkup = movie => `
-<img src="${movie.poster_url}" alt="movie-${movie.id}">
-<a href="#" class="trailer-btn">see trailer<i class="fa-solid fa-play"></i></a>
-<div class="movie-directors">
-  <h5>${movie.director}</h5>
-  <h5>${movie.movie_year}</h5>
-</div>
-`;
-
-const ratingMarkup = movie => `
-<div class="movie-rating hidden">
-  <form>
-    <input
-      type="text"
-      class="input-value"
-      placeholder="share your opinion"
-    />
-    <button class="comment-btn">submit</button>
-  </form>
-  <div class="comment-output"></div>
-  <div class="movie-rating-star">
-    <div class="star-rating">
-      <span class="star" data-rating="5">&#9733</span>
-      <span class="star" data-rating="4">&#9733</span>
-      <span class="star" data-rating="3">&#9733</span>
-      <span class="star" data-rating="2">&#9733</span>
-      <span class="star" data-rating="1">&#9733</span>
+    <img src="${movie.poster_url}" alt="movie-${movie.id}">
+    <a href="#" class="trailer-btn">see trailer<i class="fa-solid fa-play"></i></a>
+    <div class="movie-directors">
+      <h5>${movie.director}</h5>
+      <h5>${movie.movie_year}</h5>
     </div>
-    <div class="star-output">
-      <h5></h5>
-    </div>
-  </div>
-</div>
 `;
 
 const headerMarkup = movie => `
-<div class="about-movie hiddn">
+<div class="about-movie hidden">
   <div class="movie-title">
     <h3>${movie.title}</h3>
     <h5>${movie.genre}</h5>
@@ -333,164 +317,188 @@ const headerMarkup = movie => `
 </div>
   `;
 
+const cardBarMarkup = movie => `
+      <p>rate this movie</p>
+      <div class="card-bar1"></div>
+      <div class="card-bar2"></div>
+      <div class="card-bar3"></div>`;
+
+// <div class="comment-output"></div>
+
+/* --- function to create new element */
 function createElements(parent, elType, myClass) {
   const element = document.createElement(elType);
   element.classList.add(myClass);
   parent.appendChild(element);
+
   return element;
 }
-//week 2
 
-const cards = movies.map(movie => showMovieCard(movie));
+const movieHeader = function (movie) {
+  header.innerHTML = '';
 
-function showMovieCard(movie) {
-  const cardElement = createElements(main, 'div', 'card');
-  cardElement.insertAdjacentHTML('afterbegin', cardMarkup(movie));
+  header.insertAdjacentHTML('beforeend', headerMarkup(movie));
+  const aboutMovie = document.querySelector(`.about-movie`);
+  const moviePhoto = document.querySelector('.movie-photo');
+  aboutMovie.classList.remove('hidden');
+  aboutMovie.classList.add(`about-movie-${movie.id}`);
 
-  cardElement.addEventListener('mouseover', function (e) {
-    // createCardHeader
-    //submitting and displaying a comment about the movie.
+  moviePhoto.style.backgroundImage = `url(${movie.poster_url})`;
+};
+/* ------show each card------------------- */
 
-    header.innerHTML = '';
-    // cardElement.innerHTML = '';
-    // cardElement.insertAdjacentHTML('afterbegin', cardMarkup(movie));
-    header.insertAdjacentHTML('beforeend', headerMarkup(movie));
-    const aboutMovie = document.querySelector(`.about-movie`);
+const cards = movies.map(movie => moviesCard(movie));
 
-    const moviePhoto = document.querySelector('.movie-photo');
+/* ---create card and card functionality */
+function moviesCard(movie) {
+  //----------card element---------------
+  const cardEl = createElements(main, 'div', 'card');
+  cardEl.insertAdjacentHTML('afterbegin', cardMarkup(movie));
 
-    const movieRate = document.querySelector('.movie-rating');
-    // movieRate.innerHTML = '';
-    // cardElement.insertAdjacentHTML('beforeend', rateMarkup(movie));
+  // pass movieHeader function with mouseover
+  cardEl.addEventListener('mouseover', () => movieHeader(movie));
 
-    const inputElement = document.querySelector('.input-value');
-    const commentBtn = document.querySelector('.comment-btn');
-    const commentOutput = document.querySelector('.comment-output');
+  // Attach toggleCardRate functionality to cardBars
+  const cardBar = createElements(cardEl, 'div', 'card-bars');
+  cardBar.classList.add('card-bars-down');
+  cardBar.insertAdjacentHTML('afterbegin', cardBarMarkup(movie));
 
-    const stars = document.querySelectorAll('.star');
-    const starsOutput = document.querySelector('.star-output');
+  const cardOverlay = createElements(cardEl, 'div', 'card-overlay');
+  cardOverlay.classList.add('hide');
 
-    aboutMovie.classList.remove('hidden');
-    aboutMovie.classList.add('about-movie-${movie.id}');
-
-    moviePhoto.style.backgroundImage = `url(${movie.poster_url})`;
-
-    movieRate.classList.remove('hidden');
-
-    commentBtn.addEventListener('click', function (e) {
-      e.preventDefault();
-
-      const value = inputElement.value;
-      // commentOutput.innerHTML = '';
-      commentOutput.innerHTML = `" ${value} "`;
-    });
-
-    //  b. rating the movie in a star-rating format and displaying the submitted rating.
-
-    for (const star of stars) {
-      star.addEventListener('click', function () {
-        star.setAttribute('data-clicked', 'true');
-        const rating = this.dataset.rating;
-
-        starsOutput.innerHTML = `<h5>Your rating is: ${rating}/5</h5>`;
-      });
+  cardBar.addEventListener('click', function () {
+    cardOverlay.classList.toggle('card-overlay-active'); // Corrected class name
+    if (cardOverlay.classList.contains('card-overlay-active')) {
+      cardBar.classList.replace('card-bars-down', 'card-bars-up');
+      cardOverlay.classList.remove('hide');
+    } else {
+      cardBar.classList.replace('card-bars-up', 'card-bars-down');
+      cardOverlay.classList.add('hide');
     }
-    /* SHOW about movie inside header */
   });
-  return { title: movie.title, genre: movie.genre, cardElement: cardElement };
-}
 
-function createMovieRating(rate) {
-  const inputElement = document.querySelector('.input-value');
-  const commentBtn = document.querySelector('.comment-btn');
-  const commentOutput = document.querySelector('.comment-output');
-
-  const stars = document.querySelectorAll('.star');
-  const starsOutput = document.querySelector('.star-output');
+  //?Attach ratingComment functionality to
+  // <form>
+  //       <input type="text" class="card__input-value" placeholder="share your opinion" />
+  //       <button class="comment-btn">submit</button>
+  //     </form>
+  //     <div class="comment-output"></div>
+  const movieRating = createElements(cardOverlay, 'div', 'movie-rating');
+  const form = createElements(movieRating, 'form');
+  // form.insertAdjacentHTML("afterbegin", movieCommentRateMarkup(movie));
+  const cardInputValue = createElements(form, 'input', '.card__input-value');
+  const commentBtn = createElements(form, 'button', 'comment-btn');
+  commentBtn.innerHTML = `<i class="fa-solid fa-right-long"></i>`;
+  const commentOutput = createElements(movieRating, 'div', 'comment-output');
 
   commentBtn.addEventListener('click', function (e) {
     e.preventDefault();
-
-    const value = inputElement.value;
+    const value = cardInputValue.value;
     commentOutput.innerHTML = `" ${value} "`;
   });
 
-  //  b. rating the movie in a star-rating format and displaying the submitted rating.
+  // ?Populate starsContainer with stars and attach ratingStar functionality
 
-  for (const star of stars) {
-    star.addEventListener('click', function () {
-      star.setAttribute('data-clicked', 'true');
-      const rating = this.dataset.rating;
+  const movieStarRating = createElements(
+    cardOverlay,
+    'div',
+    'movie-rating-star'
+  );
+  const starsContainer = createElements(cardOverlay, 'div', 'star-rating');
 
-      starsOutput.innerHTML = `<h5>Your rating is: ${rating}/5</h5>`;
-    });
+  const starsOutput = createElements(cardOverlay, 'div', 'stars-output');
+
+  const starNum = ['5', '4', '3', '2', '1'];
+  starNum.forEach(rating => {
+    const star = createElements(starsContainer, 'span', `star`);
+    star.dataset.rating = rating;
+    star.innerHTML = `<i class="fa-regular fa-star"></i>`;
+    // star.textContent = "#10025";
+    star.addEventListener('click', ratingStar);
+  });
+
+  // Additional setup for ratingStar functionality
+  function ratingStar() {
+    const clickedStar = this;
+    clickedStar.setAttribute('data-clicked', 'true');
+    const rating = clickedStar.dataset.rating;
+
+    starsOutput.innerHTML = `<h5>Your rating is: ${rating}/5</h5>`;
   }
+
+  return { title: movie.title, genre: movie.genre, cardEl: cardEl };
 }
 
-//SEARCH FUNCTINALITY
-//VARIABLES
+/* --nav animation start here------------------ */
+const navlinksArr = [navLink1, navLink2, navLink3, navLink4];
 
-const menuSearch = document.querySelector('.menu-search');
-const menuInput = document.querySelector('.menu-input');
-const menuBtn = document.querySelector('.menu-btn');
+function navAnimate(dir1, dir2) {
+  navlinksArr.forEach((nav, i) => {
+    nav.classList.replace(`slide-${dir1}-${i + 1}`, `slide-${dir2}-${i + 1}`);
+  });
+}
 
-menuBtn.addEventListener('click', function (e) {
-  e.preventDefault();
+function toggleMenu() {
+  menuBar.classList.toggle('change');
 
-  menuSearch.classList.toggle('active');
-  menuInput.focus();
-});
-menuInput.addEventListener('input', function (e) {
+  menuOverlay.classList.toggle('menu-overlay-active');
+
+  if (menuOverlay.classList.contains('menu-overlay-active')) {
+    menuOverlay.classList.replace('overlay-slide-left', 'overlay-slide-right');
+
+    navAnimate('out', 'in');
+  } else {
+    menuOverlay.classList.replace('overlay-slide-right', 'overlay-slide-left');
+    navAnimate('in', 'out');
+  }
+}
+menuBar.addEventListener('click', toggleMenu);
+/* --nav animation ends here------------------ */
+const navInput = document.querySelector('.menu__input-value');
+navInput.addEventListener('input', function (e) {
   e.preventDefault();
   const value = e.target.value.toLowerCase();
   cards.forEach(card => {
-    const isVisible =
-      card.title.toLowerCase().includes(value) ||
-      card.genre.toLowerCase().includes(value);
-
-    card.cardElement.classList.toggle('hide', !isVisible);
+    const isVisible = card.title.toLowerCase().includes(value);
+    card.cardEl.classList.toggle('hide', !isVisible);
   });
 });
-//   const aboutMovie = document.querySelector(`.about-movie`);
 
-//   const moviePhoto = document.querySelector('.movie-photo');
+/* FOOTER */
 
-//   const movieRate = document.querySelector('.movie-rating');
+const timer = document.querySelector('.timer');
 
-//   const inputElement = document.querySelector('.input-value');
-//   const commentBtn = document.querySelector('.comment-btn');
-//   const commentOutput = document.querySelector('.comment-output');
+function logOutTimer() {
+  let time = 100;
 
-//   const stars = document.querySelectorAll('.star');
-//   const starsOutput = document.querySelector('.star-output');
+  const tick = setInterval(function () {
+    let time = 100;
 
-//   movieRate.classList.remove('hidden');
+    const min = Math.trunc(time / 60)
+      .toString()
+      .padStart(2, '0');
 
-//   commentBtn.addEventListener('click', function (e) {
-//     e.preventDefault();
+    const sec = String(Math.floor(time % 60)).padStart(2, '0');
 
-//     const value = inputElement.value;
-//     commentOutput.innerHTML = `" ${value} "`;
-//   });
+    if (time === 0) {
+      clearInterval(tick);
+    }
+    time--;
 
-//   //  b. rating the movie in a star-rating format and displaying the submitted rating.
+    timer.innerHTML = `You will logout in ${min}:${sec}`;
+  }, 1000);
+}
+logOutTimer();
 
-//   for (const star of stars) {
-//     star.addEventListener('click', function () {
-//       star.setAttribute('data-clicked', 'true');
-//       const rating = this.dataset.rating;
+const footerInput = document.querySelector('.footer-input');
+const footerBtn = document.querySelector('.footer-btn');
 
-//       starsOutput.innerHTML = `<h5>Your rating is: ${rating}/5</h5>`;
-//     });
-//   }
-//   /* SHOW about movie inside header */
-//   aboutMovie.classList.remove('hide');
-//   aboutMovie.classList.add('about-movie-${movie.id}');
+footerBtn.addEventListener('click', function (e) {
+  e.preventDefault();
 
-//   moviePhoto.style.backgroundImage = `url(${movie.poster_url})`;
-// });
+  const value = footerInput.value;
 
-// cardElement.addEventListener('mouseleave', function () {
-//   aboutMovie.classList.add('hide');
-//   aboutMovie.classList.remove('about-movie-${movie.id}');
-// });
+  setTimeout(function (e) {
+    alert('time to go');
+  }, value * 60 * 1000);
+});

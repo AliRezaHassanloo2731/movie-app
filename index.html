@@ -3,8 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Movie App</title>
-    <!-- favicons -->
+    <title>Document</title>
+
     <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon" />
 
     <!-- font awesome -->
@@ -16,24 +16,54 @@
     <link rel="stylesheet" href="styles.css" />
     <!-- javascript -->
     <script defer src="script.js"></script>
-    <!-- <script defer src="ecercise.js"></script> -->
   </head>
-
-  <body class="container">
-    <!-- HEADER -->
+  <body class="body-container">
     <header class="header" id="header">
-      <h1>MOVIE APP</h1>
+      <h1>Moviekade</h1>
     </header>
-    <!--  MENU -->
     <nav class="menu" id="menu">
-      <div class="menu-search">
-        <input type="search" class="menu-input" />
-        <button class="menu-btn">
-          <i class="fas fa-search"></i>
-        </button>
+      <div class="menu-overlay overlay-slide-left">
+        <ul>
+          <li class="nav-link-1 slide-out-1">
+            <form class="menu-search">
+              <input
+                type="search"
+                class="menu__input-value nav-inputs-light-color"
+              />
+              <button class="menu-btn">
+                <i class="fas fa-search"></i>
+              </button>
+            </form>
+          </li>
+          <li class="nav-link-2 slide-out-2 documentary">Documentary</li>
+          <li class="nav-link-3 slide-out-3 recently">recently</li>
+          <li class="nav-link-4 slide-out-4 romantic">romantic</li>
+        </ul>
+      </div>
+      <!-- MENU BARS -->
+      <div class="menu-bars">
+        <div class="bar1"></div>
+        <div class="bar2"></div>
+        <div class="bar3"></div>
       </div>
     </nav>
+
     <!-- MAIN -->
     <main class="main" id="main"></main>
+    <footer class="footer">
+      <div class="spend-time">
+        <form>
+          <input
+            type="number"
+            class="footer-input"
+            placeholder="set your time in min"
+          />
+          <button class="footer-btn">
+            <i class="fa-solid fa-clock"></i>
+          </button>
+        </form>
+      </div>
+      <div class="timer"></div>
+    </footer>
   </body>
 </html>

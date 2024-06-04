@@ -219,7 +219,7 @@ const movies = [
     poster_url:
       'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/6oom5QYQ2yQTMJIbnvbkBL9cHo6.jpg',
     price: '140.00',
-    genre: 'fantasy',
+    genre: 'documentary',
     rating: 8.8,
   },
   {
@@ -323,8 +323,6 @@ const cardBarMarkup = movie => `
       <div class="card-bar2"></div>
       <div class="card-bar3"></div>`;
 
-// <div class="comment-output"></div>
-
 /* --- function to create new element */
 function createElements(parent, elType, myClass) {
   const element = document.createElement(elType);
@@ -371,6 +369,7 @@ function moviesCard(movie) {
     if (cardOverlay.classList.contains('card-overlay-active')) {
       cardBar.classList.replace('card-bars-down', 'card-bars-up');
       cardOverlay.classList.remove('hide');
+      cardOverlay.style.opacity = '1';
     } else {
       cardBar.classList.replace('card-bars-up', 'card-bars-down');
       cardOverlay.classList.add('hide');
@@ -378,11 +377,6 @@ function moviesCard(movie) {
   });
 
   //?Attach ratingComment functionality to
-  // <form>
-  //       <input type="text" class="card__input-value" placeholder="share your opinion" />
-  //       <button class="comment-btn">submit</button>
-  //     </form>
-  //     <div class="comment-output"></div>
   const movieRating = createElements(cardOverlay, 'div', 'movie-rating');
   const form = createElements(movieRating, 'form');
   // form.insertAdjacentHTML("afterbegin", movieCommentRateMarkup(movie));
@@ -426,7 +420,12 @@ function moviesCard(movie) {
     starsOutput.innerHTML = `<h5>Your rating is: ${rating}/5</h5>`;
   }
 
-  return { title: movie.title, genre: movie.genre, cardEl: cardEl };
+  return {
+    title: movie.title,
+    genre: movie.genre,
+    year: movie.movie_year,
+    cardEl: cardEl,
+  };
 }
 
 /* --nav animation start here------------------ */
@@ -463,7 +462,39 @@ navInput.addEventListener('input', function (e) {
     card.cardEl.classList.toggle('hide', !isVisible);
   });
 });
+// console.log(cards);
 
+const documentary = document.querySelector('.documentary');
+documentary.addEventListener('click', function () {
+  cards.forEach(card => {
+    const isVisible = card.genre.toLowerCase().includes('documentary');
+
+    card.cardEl.classList.toggle('hide', !isVisible);
+  });
+});
+
+const action = document.querySelector('.action');
+
+action.addEventListener('click', function () {
+  cards.forEach(card => {
+    const isVisible = card.genre.toLowerCase().includes('action');
+
+    card.cardEl.classList.toggle('hide', !isVisible);
+  });
+});
+
+const recently = document.querySelector('.recently');
+// cards.forEachrecently(card => {
+//   console.log(card.year);
+// });
+recently.addEventListener('click', function () {
+  cards.forEach(card => {
+    if (card.year > 2000) {
+      const isVisible = card.year;
+      card.cardEl.classList.toggle('hide', !isVisible);
+    }
+  });
+});
 /* FOOTER */
 
 const timer = document.querySelector('.timer');
@@ -472,12 +503,9 @@ function logOutTimer() {
   let time = 100;
 
   const tick = setInterval(function () {
-    let time = 100;
-
     const min = Math.trunc(time / 60)
       .toString()
       .padStart(2, '0');
-
     const sec = String(Math.floor(time % 60)).padStart(2, '0');
 
     if (time === 0) {
@@ -485,9 +513,10 @@ function logOutTimer() {
     }
     time--;
 
-    timer.innerHTML = `You will logout in ${min}:${sec}`;
+    timer.textContent = `You will logout in ${min}:${sec}`;
   }, 1000);
 }
+
 logOutTimer();
 
 const footerInput = document.querySelector('.footer-input');

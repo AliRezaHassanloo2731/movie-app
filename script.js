@@ -449,6 +449,9 @@ function toggleMenu() {
   } else {
     menuOverlay.classList.replace('overlay-slide-right', 'overlay-slide-left');
     navAnimate('in', 'out');
+    cards.forEach(card => {
+      card.cardEl.classList.remove('hide');
+    });
   }
 }
 menuBar.addEventListener('click', toggleMenu);

@@ -157,13 +157,21 @@ input::placeholder {
   margin-bottom: 0.5rem;
 }
 
-.movie-photo {
+.movie-trailer {
   width: 80%;
   height: 20rem;
   border-radius: 2rem;
-  background-repeat: no-repeat;
-  background-position: top;
-  background-size: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+iframe {
+  border: 2px solid var(--highlight-color);
+  outline: 4px solid var(--btn-hover-yellow);
+  outline-offset: 1rem;
+  width: 80%;
+  height: auto;
+  border-radius: 2px;
 }
 
 /* HEADER STYLES END HERE */

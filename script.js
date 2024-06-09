@@ -23,8 +23,8 @@ const movies = [
     price: '120.00',
     genre: 'science fiction',
     rating: 7.4,
+    trailer: 'https://www.youtube.com/embed/0vxOhd4qlnA?si=FJ4QZfsFf1wkUJUo',
   },
-
   {
     id: 2,
     title: 'The Dark Knight',
@@ -46,8 +46,8 @@ const movies = [
     price: '140.00',
     genre: 'action',
     rating: 9.0,
+    trailer: 'https://www.youtube.com/embed/EXeTwQWrcwY?si=bRqh1bnFcwdyM9W4',
   },
-
   {
     id: 3,
     title: 'Avatar',
@@ -68,6 +68,7 @@ const movies = [
     price: '130.00',
     genre: 'science fiction',
     rating: 7.8,
+    trailer: 'https://www.youtube.com/embed/5PSNL1qE6VY?si=0kT9LmW1MJD1arMm',
   },
   {
     id: 4,
@@ -88,6 +89,7 @@ const movies = [
     price: '120.00',
     genre: 'science fiction',
     rating: 8.7,
+    trailer: 'https://www.youtube.com/embed/vKQi3bBA1y8?si=pH3-X5f2iJDsgPI2',
   },
   {
     id: 5,
@@ -112,6 +114,7 @@ const movies = [
     price: '160.00',
     genre: 'crime',
     rating: 9.2,
+    trailer: 'https://www.youtube.com/embed/sY1S34973zA?si=CBcu9EDAMQzIkR7R',
   },
   {
     id: 6,
@@ -132,8 +135,8 @@ const movies = [
     price: '125.00',
     genre: 'drama',
     rating: 8.8,
+    trailer: 'https://www.youtube.com/embed/SUXWAEX2jlg?si=WzmOUUxFdz43WTDH',
   },
-
   {
     id: 7,
     title: 'The Shawshank Redemption',
@@ -155,6 +158,7 @@ const movies = [
     price: '135.00',
     genre: 'drama',
     rating: 9.3,
+    trailer: 'https://www.youtube.com/embed/NmzuHjWmXOc?si=r6j8TTza7fGpihgF',
   },
   {
     id: 8,
@@ -175,7 +179,8 @@ const movies = [
       'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/c8Ass7acuOe4za6DhSattE359gr.jpg',
     price: '150.00',
     genre: 'history',
-    rating: 8,
+    rating: 8.0,
+    trailer: 'https://www.youtube.com/embed/gG22XNhtnoY?si=RlVcznxpudE_n139',
   },
   {
     id: 9,
@@ -198,6 +203,7 @@ const movies = [
     price: '125.00',
     genre: 'action',
     rating: 8.5,
+    trailer: 'https://www.youtube.com/embed/owK1qxDselE?si=o250midl43H5jq1R',
   },
   {
     id: 10,
@@ -219,55 +225,146 @@ const movies = [
     poster_url:
       'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/6oom5QYQ2yQTMJIbnvbkBL9cHo6.jpg',
     price: '140.00',
-    genre: 'documentary',
+    genre: 'fantasy',
     rating: 8.8,
+    trailer: 'https://www.youtube.com/embed/V75dMMIW2B4?si=2IL6gW-EwDvjnm2t',
   },
   {
     id: 11,
-    title: 'The Lion King',
+    title: 'Pulp Fiction',
     description:
-      'Lion prince Simba and his father are targeted by his bitter uncle, who wants to ascend the throne himself.',
+      'The lives of two mob hitmen, a boxer, a gangster, and his wife, and a pair of diner bandits intertwine in four tales of violence and redemption.',
     movie_year: 1994,
-    director: 'Roger Allers, Rob Minkoff',
+    director: 'Quentin Tarantino',
     actors: [
-      'Matthew Broderick',
-      'Jeremy Irons',
-      'James Earl Jones',
-      'Whoopi Goldberg',
-      'Rowan Atkinson',
-      'Moira Kelly',
-      'Nathan Lane',
-      'Ernie Sabella',
+      'John Travolta',
+      'Uma Thurman',
+      'Samuel L. Jackson',
+      'Bruce Willis',
+      'Tim Roth',
+      'Ving Rhames',
+      'Harvey Keitel',
     ],
     poster_url:
-      'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/sKCr78MXSLixwmZ8DyJLrpMsd15.jpg',
-    price: '100.00',
-    genre: 'animation',
-    rating: 8.5,
+      'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/d5iIlFn5s0ImszYzBPb8JPIfbXD.jpg',
+    price: '130.00',
+    genre: 'crime',
+    rating: 8.9,
+    trailer: 'https://www.youtube.com/embed/s7EdQ4FqbhY?si=v16LUAf__V1vh7A1',
   },
   {
     id: 12,
-    title: 'Star Wars: Episode IV - A New Hope',
+    title: 'Forrest Gump',
     description:
-      "Luke Skywalker joins forces with a Jedi Knight, a cocky pilot, a Wookiee, and two droids to save the galaxy from the Empire's world-destroying battle station, while also attempting to rescue Princess Leia from the mysterious Darth Vader.",
-    movie_year: 1977,
-    director: 'George Lucas',
+      'The presidencies of Kennedy and Johnson, the Vietnam War, the Watergate scandal, and other historical events unfold from the perspective of an Alabama man with an IQ of 75, whose only desire is to be reunited with his childhood sweetheart.',
+    movie_year: 1994,
+    director: 'Robert Zemeckis',
     actors: [
-      'Mark Hamill',
-      'Harrison Ford',
-      'Carrie Fisher',
-      'Peter Cushing',
-      'Alec Guinness',
-      'David Prowse',
-      'James Earl Jones',
-      'Anthony Daniels',
-      'Kenny Baker',
+      'Tom Hanks',
+      'Robin Wright',
+      'Gary Sinise',
+      'Sally Field',
+      'Mykelti Williamson',
     ],
     poster_url:
-      'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/6FfCtAuVAW8XJjZ7eWeLibRLWTw.jpg',
-    price: '130.00',
-    genre: 'science fiction',
-    rating: 8.6,
+      'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/saHP97rTPS5eLmrLQEcANmKrsFl.jpg',
+    price: '125.00',
+    genre: 'drama',
+    rating: 8.8,
+    trailer: 'https://www.youtube.com/embed/bLvqoHBptjg?si=ExPoYIMtlpZD9Ow6',
+  },
+  {
+    id: 13,
+    title: 'John Wick',
+    description:
+      'An ex-hitman comes out of retirement to track down the gangsters that killed his dog and took everything from him.',
+    movie_year: 2014,
+    director: 'Chad Stahelski, David Leitch',
+    actors: ['Keanu Reeves', 'Michael Nyqvist', 'Alfie Allen', 'Willem Dafoe'],
+    poster_url:
+      'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/fZPSd91yGE9fCcCe6OoQr6E3Bev.jpg',
+    price: '140.00',
+    genre: 'action',
+    rating: 7.4,
+    trailer: 'https://www.youtube.com/embed/2AUmvWm5ZDQ?si=uXMFmz8NhBb_Q3q4',
+  },
+
+  {
+    id: 14,
+    title: 'Black Panther',
+    description:
+      "T'Challa, heir to the hidden but advanced kingdom of Wakanda, must step forward to lead his people into a new future.",
+    movie_year: 2018,
+    director: 'Ryan Coogler',
+    actors: [
+      'Chadwick Boseman',
+      'Michael B. Jordan',
+      "Lupita Nyong'o",
+      'Danai Gurira',
+    ],
+    poster_url:
+      'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/uxzzxijgPIY7slzFvMotPv8wjKA.jpg',
+    price: '150.00',
+    genre: 'action',
+    rating: 7.3,
+    trailer: 'https://www.youtube.com/embed/xjDjIWPwcPU?si=Lq4A_e08IUUiWq9V',
+  },
+
+  {
+    id: 15,
+    title: 'The Avengers',
+    description:
+      "Earth's mightiest heroes must come together and learn to fight as a team if they are to stop the mischievous Loki and his alien army from enslaving humanity.",
+    movie_year: 2012,
+    director: 'Joss Whedon',
+    actors: [
+      'Robert Downey Jr.',
+      'Chris Evans',
+      'Mark Ruffalo',
+      'Chris Hemsworth',
+    ],
+    poster_url:
+      'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/RYMX2wcKCBAr24UyPD7xwmjaTn.jpg',
+    price: '170.00',
+    genre: 'action',
+    rating: 8.0,
+    trailer: 'https://www.youtube.com/embed/eOrNdBpGMv8?si=6N85rGlH0oCo9BaE',
+  },
+  {
+    id: 16,
+    title: 'Wonder Woman',
+    description:
+      'When an American pilot crashes on the shores of her sheltered island paradise, Diana, an Amazonian warrior in training, leaves home to fight a war, discovering her full powers and true destiny.',
+    movie_year: 2017,
+    director: 'Patty Jenkins',
+    actors: ['Gal Gadot', 'Chris Pine', 'Robin Wright', 'Lucy Davis'],
+    poster_url:
+      'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/imekS7f1OuHyUP2LAiTEM0zBzUz.jpg',
+    price: '160.00',
+    genre: 'action',
+    rating: 7.4,
+    trailer: 'https://www.youtube.com/embed/1Q8fG0TtVAY?si=AUq06a6L5jGvvHmn',
+  },
+
+  {
+    id: 17,
+    title: 'Mad Max: Fury Road',
+    description:
+      'In a post-apocalyptic wasteland, Max teams up with a mysterious woman, Furiosa, to try and survive.',
+    movie_year: 2015,
+    director: 'George Miller',
+    actors: [
+      'Tom Hardy',
+      'Charlize Theron',
+      'Nicholas Hoult',
+      'Hugh Keays-Byrne',
+    ],
+    poster_url:
+      'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/8tZYtuWezp8JbcsvHYO0O46tFbo.jpg',
+    price: '150.00',
+    genre: 'action',
+    rating: 8.1,
+    trailer: 'https://www.youtube.com/embed/hEJnMQG9ev8?si=udzBE4FvWh0zkJt3',
   },
 ];
 
@@ -288,7 +385,7 @@ const navLink4 = document.querySelector('.nav-link-4');
 /* MARKUPS__________________----------- */
 const cardMarkup = movie => `
     <img src="${movie.poster_url}" alt="movie-${movie.id}">
-    <a href="#" class="trailer-btn">see trailer<i class="fa-solid fa-play"></i></a>
+    <a href="#stream" class="trailer-btn">see trailer<i class="fa-solid fa-play"></i></a>
     <div class="movie-directors">
       <h5>${movie.director}</h5>
       <h5>${movie.movie_year}</h5>
@@ -313,7 +410,11 @@ const headerMarkup = movie => `
       <a href="#" class="buy-movie__btn">Buy</a>
     </div>
   </div>
-     <div class="movie-photo"></div>  
+     <div class="movie-trailer" id="stream">
+     <iframe src=${
+       movie.trailer
+     } title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+     </div>
 </div>
   `;
 
@@ -377,6 +478,7 @@ function moviesCard(movie) {
   });
 
   //?Attach ratingComment functionality to
+
   const movieRating = createElements(cardOverlay, 'div', 'movie-rating');
   const form = createElements(movieRating, 'form');
   // form.insertAdjacentHTML("afterbegin", movieCommentRateMarkup(movie));
@@ -492,7 +594,7 @@ const recently = document.querySelector('.recently');
 // });
 recently.addEventListener('click', function () {
   cards.forEach(card => {
-    if (card.year > 2000) {
+    if (card.year > 2011) {
       const isVisible = card.year;
       card.cardEl.classList.toggle('hide', !isVisible);
     }

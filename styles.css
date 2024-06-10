@@ -37,10 +37,10 @@
   --navColor4: #a2a071;
 
   /* star */
-  --star-yellow: #ffb703;
-  --highlight-color: #fca311;
+  --star-yellow: #ffef00;
+  --highlight-color: #ffc600;
 
-  /* --primary-color: #0d1b2a; */
+  --linkdin-blue: #0762c8;
 }
 html {
   font-size: 62.5%;
@@ -621,7 +621,7 @@ nav input {
   height: 5rem;
   display: flex;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: space-around;
   grid-column: 1/-1;
   position: fixed;
   bottom: 0;
@@ -666,6 +666,16 @@ nav input {
   background-color: var(--btn-hover);
   color: var(--btn-color);
 }
+.footer a {
+  display: inline-block;
+}
+
+.icon {
+  fill: var(--btn-hover-yellow);
+  width: 1.4rem;
+  height: 1.4rem;
+  z-index: 2;
+}
 
 /* RESPONSIVE */
 @media (max-width: 1100px) {
@@ -676,6 +686,9 @@ nav input {
     font-size: 1.4rem;
   }
   .card {
+    font-size: 1.4rem;
+  }
+  .footer {
     font-size: 1.4rem;
   }
 }
@@ -689,6 +702,9 @@ nav input {
   .card-bars p {
     font-size: 1.2rem;
   }
+  .footer {
+    font-size: 1.2rem;
+  }
 }
 @media (max-width: 500px) {
   .menu ul li {
@@ -699,5 +715,24 @@ nav input {
   }
   .card-bars p {
     font-size: 1rem;
+  }
+  .footer {
+    font-size: 1rem;
+  }
+  .footer .footer-input {
+    padding: 0.8rem 0.5rem;
+    width: 3rem;
+    font-size: inherit;
+    margin-right: 0.3rem;
+  }
+  .fa-clock {
+    font-size: 1.4rem;
+  }
+  .footer .footer-btn {
+    padding: 0.7rem 0.5rem;
+    font-size: 1.4rem;
+  }
+  .footer .footer-input::placeholder {
+    font-size: 0.7rem;
   }
 }

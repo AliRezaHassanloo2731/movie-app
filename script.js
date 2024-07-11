@@ -14,6 +14,8 @@ const navLink2 = document.querySelector('.nav-link-2');
 const navLink3 = document.querySelector('.nav-link-3');
 const navLink4 = document.querySelector('.nav-link-4');
 
+let cards;
+
 /*---- Card variable ========*/
 
 /* MARKUPS__________________----------- */
@@ -58,8 +60,6 @@ const cardBarMarkup = movie => `
       <div class="card-bar2"></div>
       <div class="card-bar3"></div>`;
 
-let cards;
-
 /* --- function to create new element */
 function createElements(parent, elType, myClass) {
   const element = document.createElement(elType);
@@ -69,11 +69,25 @@ function createElements(parent, elType, myClass) {
   return element;
 }
 
-async function getMovies() {
-  const response = await fetch(apiUrl);
-  const data = await response.json();
+/* -----create header------------------------ */
+const displayHeader = function (movie) {
+  header.innerHTML = '';
 
-  displayMovie(data);
+  header.insertAdjacentHTML('beforeend', headerMarkup(movie));
+  const aboutMovie = document.querySelector(`.about-movie`);
+
+  aboutMovie.classList.replace('hidden', `about-movie-${movie.id}`);
+};
+
+async function getMovies() {
+  try {
+    const response = await fetch(apiUrl);
+    const data = await response.json();
+
+    displayMovie(data);
+  } catch (error) {
+    console.log('somthing went wrong');
+  }
 }
 
 const displayMovie = function (movies) {
@@ -82,56 +96,55 @@ const displayMovie = function (movies) {
 };
 getMovies();
 
-const movieHeader = function (movie) {
-  header.innerHTML = '';
-
-  header.insertAdjacentHTML('beforeend', headerMarkup(movie));
-  const aboutMovie = document.querySelector(`.about-movie`);
-  const moviePhoto = document.querySelector('.movie-photo');
-  aboutMovie.classList.remove('hidden');
-  aboutMovie.classList.add(`about-movie-${movie.id}`);
-
-  moviePhoto.style.backgroundImage = `url(${movie.poster_url})`;
-};
-
-/* ---create card and card functionality */
+/* ------show each card------------------- */
 function moviesCard(movie) {
-  //----------card element---------------
+  /* VARIABLES */
   const cardEl = createElements(main, 'div', 'card');
   cardEl.insertAdjacentHTML('afterbegin', cardMarkup(movie));
 
-  // pass movieHeader function with mouseover
-  cardEl.addEventListener('mouseover', () => movieHeader(movie));
-
-  // Attach toggleCardRate functionality to cardBars
   const cardBar = createElements(cardEl, 'div', 'card-bars');
-  cardBar.classList.add('card-bars-down');
+
   cardBar.insertAdjacentHTML('afterbegin', cardBarMarkup(movie));
 
   const cardOverlay = createElements(cardEl, 'div', 'card-overlay');
-  cardOverlay.classList.add('hide');
-
-  cardBar.addEventListener('click', function () {
-    cardOverlay.classList.toggle('card-overlay-active'); // Corrected class name
-    if (cardOverlay.classList.contains('card-overlay-active')) {
-      cardBar.classList.replace('card-bars-down', 'card-bars-up');
-      cardOverlay.classList.remove('hide');
-      cardOverlay.style.opacity = '1';
-    } else {
-      cardBar.classList.replace('card-bars-up', 'card-bars-down');
-      cardOverlay.classList.add('hide');
-    }
-  });
-
-  //?Attach ratingComment functionality to
 
   const movieRating = createElements(cardOverlay, 'div', 'movie-rating');
   const form = createElements(movieRating, 'form');
-  // form.insertAdjacentHTML("afterbegin", movieCommentRateMarkup(movie));
   const cardInputValue = createElements(form, 'input', '.card__input-value');
   const commentBtn = createElements(form, 'button', 'comment-btn');
   commentBtn.innerHTML = `<i class="fa-solid fa-right-long"></i>`;
   const commentOutput = createElements(movieRating, 'div', 'comment-output');
+  const starsContainer = createElements(cardOverlay, 'div', 'star-rating');
+
+  const starsOutput = createElements(cardOverlay, 'div', 'stars-output');
+  const starNumbers = ['1', '2', '3', '4', '5'];
+  starNumbers.forEach(starNumber => {
+    const star = createElements(starsContainer, 'span', `star`);
+    star.setAttribute('data-rating', starNumber);
+    star.innerHTML = `&#9734;`;
+  });
+
+  cardOverlay.classList.add('hide');
+
+  function showOverlay() {
+    cardOverlay.classList.toggle('card-overlay-active'); //
+
+    if (cardOverlay.classList.contains('card-overlay-active')) {
+      cardBar.classList.toggle('card-bars-up');
+      cardOverlay.classList.replace('hide', 'card-overlay-active');
+      cardOverlay.style.opacity = '1';
+    } else {
+      cardBar.classList.toggle('card-bars-up');
+
+      cardOverlay.classList.toggle('card-overlay-active');
+
+      cardOverlay.classList.replace('card-overlay-active', 'hide');
+    }
+  }
+
+  cardEl.addEventListener('mouseover', () => displayHeader(movie));
+
+  cardBar.addEventListener('click', showOverlay);
 
   commentBtn.addEventListener('click', function (e) {
     e.preventDefault();
@@ -139,34 +152,23 @@ function moviesCard(movie) {
     commentOutput.innerHTML = `" ${value} "`;
   });
 
-  // ?Populate starsContainer with stars and attach ratingStar functionality
+  starsContainer.addEventListener('click', function (e) {
+    const clicked = e.target.closest('.star');
+    if (!clicked) return;
 
-  const movieStarRating = createElements(
-    cardOverlay,
-    'div',
-    'movie-rating-star'
-  );
-  const starsContainer = createElements(cardOverlay, 'div', 'star-rating');
+    const clickedRating = parseInt(clicked.dataset.rating);
 
-  const starsOutput = createElements(cardOverlay, 'div', 'stars-output');
+    starsContainer.querySelectorAll('.star').forEach(star => {
+      const starRating = parseInt(star.dataset.rating);
+      if (starRating <= clickedRating) {
+        star.innerHTML = `&#9733;`;
+      } else {
+        star.innerHTML = `&#9734;`;
+      }
+    });
 
-  const starNum = ['5', '4', '3', '2', '1'];
-  starNum.forEach(rating => {
-    const star = createElements(starsContainer, 'span', `star`);
-    star.dataset.rating = rating;
-    star.innerHTML = `<i class="fa-regular fa-star"></i>`;
-    // star.textContent = "#10025";
-    star.addEventListener('click', ratingStar);
+    starsOutput.innerHTML = `<h5>Your rating is: ${clicked.dataset.rating}/5</h5>`;
   });
-
-  // Additional setup for ratingStar functionality
-  function ratingStar() {
-    const clickedStar = this;
-    clickedStar.setAttribute('data-clicked', 'true');
-    const rating = clickedStar.dataset.rating;
-
-    starsOutput.innerHTML = `<h5>Your rating is: ${rating}/5</h5>`;
-  }
 
   return {
     title: movie.title,
@@ -234,9 +236,7 @@ action.addEventListener('click', function () {
 });
 
 const recently = document.querySelector('.recently');
-// cards.forEachrecently(card => {
-//   console.log(card.year);
-// });
+
 recently.addEventListener('click', function () {
   cards.forEach(card => {
     if (card.year > 2011) {
@@ -250,7 +250,7 @@ recently.addEventListener('click', function () {
 const timer = document.querySelector('.timer');
 
 function logOutTimer() {
-  let time = 100;
+  let time = 185;
 
   const tick = setInterval(function () {
     const min = Math.trunc(time / 60)
